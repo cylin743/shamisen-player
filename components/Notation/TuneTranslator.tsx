@@ -4,7 +4,7 @@ function removeParentheses(str: string): string {
     return str.replace("(", "").replace(")", "")
 }
 
-function TuneParser(source: string){
+function TuneParser(source: any){
     const lines = source.split('\n')
     var title = ""
     var key = ""
@@ -209,7 +209,7 @@ function cgcTransformer(note: string){
     return result
 
 }
-function cfcTransformer(note){
+function cfcTransformer(note: any){
 
 }
 function transformer(key : string, note: string){

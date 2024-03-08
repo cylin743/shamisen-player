@@ -270,7 +270,7 @@ function notesStringHandler(data: string) {
     }
     
 }
-function Triplet(x1, x2, noteInfo){
+function Triplet(x1: any, x2: any, noteInfo: any){
     var dX = (x1+x2)/2
     var y = 100.71
     if(noteInfo.line == "1"){
@@ -282,9 +282,9 @@ function Triplet(x1, x2, noteInfo){
     }
     console.log(noteInfo)
     return (
-        <g data-name="triplet">
+        <g data-name="triplet" key={`t-${x1}-${x2}`}>
             <path d={`M ${x1} ${y} L ${x1} ${y+5}M ${x2} ${y} L ${x2} ${y+5}M ${x1} ${y} L ${dX-4} ${y}M ${dX+4} ${y} L ${x2} ${y}`} data-name="triplet-bracket"></path>
-            <text stroke="none" font-size="12" font-style="italic" font-family="Times" font-weight="normal" text-decoration="none" text-anchor="middle" x={dX} y={y+3} data-name="3">
+            <text stroke="none" fontSize="12" fontStyle="italic" fontFamily="Times" fontWeight="normal" textDecoration="none" textAnchor="middle" x={dX} y={y+3} data-name="3">
                 <tspan x={dX}>3</tspan>
             </text>
         </g>
@@ -297,20 +297,20 @@ function TimeSignature(){
     <path data-name="4" d="M 60.941 128.99813196981265c 0.27 -0.09 0.42 -0.12 0.54 -0.03c 0.09 0.06 0.15 0.21 0.15 0.3c -0.03 0.06 -1.92 2.31 -4.23 5.04c -2.31 2.73 -4.23 4.98 -4.26 5.01c -0.03 0.06 0.12 0.06 2.55 0.06l 2.61 0l 0 -2.37c 0 -2.19 0.03 -2.37 0.06 -2.46c 0.03 -0.06 0.21 -0.18 0.57 -0.42c 1.08 -0.72 1.38 -1.08 1.86 -2.16c 0.12 -0.3 0.24 -0.54 0.27 -0.57c 0.12 -0.12 0.39 -0.06 0.45 0.12c 0.06 0.09 0.06 0.57 0.06 3.96l 0 3.9l 1.08 0c 1.05 0 1.11 0 1.2 0.06c 0.24 0.15 0.24 0.54 0 0.69c -0.09 0.06 -0.15 0.06 -1.2 0.06l -1.08 0l 0 0.33c 0 0.57 0.09 1.11 0.3 1.53c 0.36 0.75 0.93 1.17 1.68 1.26c 0.3 0.03 0.39 0.09 0.39 0.3c 0 0.15 -0.03 0.18 -0.09 0.24c -0.06 0.06 -0.09 0.06 -0.48 0.06c -0.42 0 -0.69 -0.03 -2.1 -0.24c -0.9 -0.15 -1.77 -0.15 -2.67 0c -1.41 0.21 -1.68 0.24 -2.1 0.24c -0.39 0 -0.42 0 -0.48 -0.06c -0.06 -0.06 -0.06 -0.09 -0.06 -0.24c 0 -0.21 0.06 -0.27 0.36 -0.3c 0.75 -0.09 1.32 -0.51 1.68 -1.26c 0.21 -0.42 0.3 -0.96 0.3 -1.53l 0 -0.33l -2.7 0c -2.91 0 -2.85 0 -3.09 -0.15c -0.18 -0.12 -0.3 -0.39 -0.27 -0.54c 0.03 -0.06 0.18 -0.24 0.33 -0.45c 0.75 -0.9 1.59 -2.07 2.13 -3.03c 0.33 -0.54 0.84 -1.62 1.05 -2.16c 0.57 -1.41 0.84 -2.64 0.9 -4.05c 0.03 -0.63 0.06 -0.72 0.24 -0.81l 0.12 -0.06l 0.45 0.12c 0.66 0.18 1.02 0.24 1.47 0.27c 0.6 0.03 1.23 -0.09 2.01 -0.33z"></path>
   </g>)
 }
-function DoubleBar(x){
+function DoubleBar(x: any){
     return (<g key={`db-${x}`} className="abcjs-bar abcjs-bar abcjs-l0 abcjs-m0 abcjs-mm0 abcjs-v0" fill="currentColor" stroke="none" data-name="bar">
     <path d={`M ${x} 140.31L ${x} 117.94L ${x+0.5} 116.94L ${x+0.5} 140.31z`} data-name="bar"></path>
     <path d={`M ${x+2.5} 140.31L ${x+2.5} 117.94L ${x+3} 116.94L ${x+3} 140.31z`} data-name="bar"></path>
   </g>)
 
 }
-function Bar(x){
+function Bar(x: any){
     return (<g key={`b-${x}`}  className="abcjs-bar abcjs-bar abcjs-l0 abcjs-m0 abcjs-mm0 abcjs-v0" fill="currentColor" stroke="none" data-name="bar">
     <path d={`M ${x} 140.31L ${x} 117.94L ${x+0.5} 116.94L ${x+0.5} 140.31z`} data-name="bar"></path>
   </g>)
 
 }
-function StartBar(x){
+function StartBar(x: any){
     return (
         <g key={`s-${x}`} className="abcjs-bar abcjs-bar abcjs-l0 abcjs-m0 abcjs-mm0 abcjs-v0" fill="currentColor" stroke="none" data-name="bar">
           <path d={`M ${x} 140.41L ${x} 116.94L ${x+4} 116.94L ${x+4} 140.41z`} data-name="bar"></path>
@@ -321,7 +321,7 @@ function StartBar(x){
     )
 }
 
-function EndBar(x){
+function EndBar(x: any){
     return (
         <g key={`e-${x}`} className="abcjs-bar abcjs-bar abcjs-l0 abcjs-m0 abcjs-mm0 abcjs-v0" fill="currentColor" stroke="none" data-name="bar">
           <path data-name="dots.dot" d={`M ${x-12} 124.00813196981264c 0.09 -0.03 0.27 -0.06 0.39 -0.06c 0.96 0 1.74 0.78 1.74 1.71c 0 0.96 -0.78 1.74 -1.71 1.74c -0.96 0 -1.74 -0.78 -1.74 -1.71c 0 -0.78 0.54 -1.5 1.32 -1.68z`}></path>
@@ -331,7 +331,7 @@ function EndBar(x){
         </g>
     )
 }
-function Relax(x, noteInfo){
+function Relax(x: any, noteInfo: any){
     var len = undefined
     var y = 132.71
     var ySub = 142.71
@@ -356,7 +356,7 @@ function Relax(x, noteInfo){
     )
 
 }
-function Note(x, noteInfo){
+function Note(x: any, noteInfo: any){
     var y = 144.71
     var ySub = 154.71
     var yySub = 152.71
@@ -385,20 +385,20 @@ function Note(x, noteInfo){
             case "s":
             case "sk":
             case "skui":
-                tech = (<text stroke="none" font-size="8" font-style="normal" font-family="Arial" font-weight="normal" text-decoration="none" className="abcjs-tab-number" text-anchor="middle" x={x} y={ySub} cursor="default">
+                tech = (<text stroke="none" fontSize="8" fontStyle="normal" fontFamily="Arial" fontWeight="normal" textDecoration="none" className="abcjs-tab-number" textAnchor="middle" x={x} y={ySub} cursor="default">
                             <tspan x={x}>ス</tspan>
                         </text>)
                 break
             case "h":
             case "ha":
             case "hajiki":
-                tech = (<text stroke="none" font-size="8" font-style="normal" font-family="Arial" font-weight="normal" text-decoration="none" className="abcjs-tab-number" text-anchor="middle" x={x} y={ySub} cursor="default">
+                tech = (<text stroke="none" fontSize="8" fontStyle="normal" fontFamily="Arial" fontWeight="normal" textDecoration="none" className="abcjs-tab-number" textAnchor="middle" x={x} y={ySub} cursor="default">
                             <tspan x={x}>ハ</tspan>
                         </text>)
                 break
             case "u":
             case "uchi":
-                tech = (<text stroke="none" font-size="8" font-style="normal" font-family="Arial" font-weight="normal" text-decoration="none" className="abcjs-tab-number" text-anchor="middle" x={x} y={ySub} cursor="default">
+                tech = (<text stroke="none" fontSize="8" fontStyle="normal" fontFamily="Arial" fontWeight="normal" textDecoration="none" className="abcjs-tab-number" textAnchor="middle" x={x} y={ySub} cursor="default">
                             <tspan x={x}>ウ</tspan>
                         </text>)
                 break
@@ -409,7 +409,7 @@ function Note(x, noteInfo){
                 var tempY = yySub - 15
                 tech = (<g key={`n-dt-${x}`} >
                         <path d={`M ${tempX1} ${tempY-5} C ${tempX1+4.94} ${tempY-9} ${tempX2-4.94} ${tempY-9} ${tempX2} ${tempY-5} C ${tempX2-4.94} ${tempY-7} ${tempX1+4.94} ${tempY-7} ${tempX1} ${tempY-5} z`} data-name="tie"></path>
-                        <text stroke="none" font-size="6" font-style="normal" font-family="Arial" font-weight="normal" text-decoration="none" className="abcjs-tab-number" text-anchor="middle" x={(tempX1+tempX2)/2} y={tempY-10} cursor="default">
+                        <text stroke="none" fontSize="6" fontStyle="normal" fontFamily="Arial" fontWeight="normal" textDecoration="none" className="abcjs-tab-number" textAnchor="middle" x={(tempX1+tempX2)/2} y={tempY-10} cursor="default">
                             <tspan x={(tempX1+tempX2)/2}>スリ</tspan>
                         </text>
                     </g>
@@ -439,7 +439,7 @@ function Note(x, noteInfo){
     }
     return (
         <g key={`n-${x}`} className="abcjs-tabNumber abcjs-note abcjs-d0-125 abcjs-p4 abcjs-l0 abcjs-m0 abcjs-mm0 abcjs-v0 abcjs-n0" fill="currentColor" stroke="none" data-name="tabNumber" data-index="27">
-            <text stroke="none" font-size="15" font-style="normal" font-family="Arial" font-weight="normal" text-decoration="none" className="abcjs-tab-number" text-anchor="middle" x={x} y={y} cursor="default">
+            <text stroke="none" fontSize="15" fontStyle="normal" fontFamily="Arial" fontWeight="normal" textDecoration="none" className="abcjs-tab-number" textAnchor="middle" x={x} y={y} cursor="default">
               <tspan x={x}>{noteInfo.note}</tspan>
             </text>
             {len}
@@ -447,7 +447,7 @@ function Note(x, noteInfo){
         </g>
     )
 }
-function Notes(x, notesInfo){
+function Notes(x: any, notesInfo: any){
     var rows = []
     var len = undefined
     var ySub = 130.71
@@ -468,7 +468,7 @@ function Notes(x, notesInfo){
             y = 120.71
         }
         rows.push(
-            <text stroke="none" font-size="15" font-style="normal" font-family="Arial" font-weight="normal" text-decoration="none" className="abcjs-tab-number" text-anchor="middle" x={x} y={y} cursor="default">
+            <text stroke="none" fontSize="15" fontStyle="normal" fontFamily="Arial" fontWeight="normal" textDecoration="none" className="abcjs-tab-number" textAnchor="middle" x={x} y={y} cursor="default">
               <tspan x={x}>{notes[i].note}</tspan>
             </text>
         )
@@ -493,9 +493,10 @@ function Notes(x, notesInfo){
     )
 }
 
-function Notation({ props }) {
+function Notation(props: any) {
     var results = []
-    const tuneInfo = TuneParser(props)
+    const {input} = props
+    const tuneInfo = TuneParser(input)
     for(var k = 0; k < tuneInfo.notes.length; k++){
         var notesString = tuneInfo.notes[k]
         notesString = notesString.trim()
@@ -580,7 +581,7 @@ function Notation({ props }) {
         results.push(
             <svg key={`line-${k}`} xmlns="http://www.w3.org/2000/svg" className="abcjs-container" role="img" fill="#000" stroke="#000" 
             viewBox="0 85.9602222442627 700 77.34977531433105" preserveAspectRatio="xMinYMin meet" aria-label="Sheet Music for &quot;Example&quot; section 2">
-                <g className="abcjs-staff abcjs-l0 abcjs-v1">
+                <g className="abcjs-staff abcjs-l0 abcjs-v1" key={`root-${k}`}>
                 <path key={`line-1-${k}`} d="M 0 116.46 L 700 116.46 L 700 117.16 L 0 117.16 z" stroke="none" fill="currentColor"></path>
                 <path key={`line-2-${k}`} d="M 0 128.21 L 700 128.21 L 700 128.91 L 0 128.91 z" stroke="none" fill="currentColor"></path>
                 <path key={`line-3-${k}`} d="M 0 139.71 L 700 139.71 L 700 140.41 L 0 140.41 z" stroke="none" fill="currentColor"></path>
