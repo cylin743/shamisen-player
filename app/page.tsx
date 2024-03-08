@@ -115,7 +115,7 @@ export default function Home() {
         </AccordionDetails>
       </Accordion>
       <Button onClick={handleOpen}>Share</Button>
-      <Button onClick={()=>openInNewTab(`/printable?t=${encodeURIComponent(compressedTune)}`)}>Printable Page</Button>
+      <Button onClick={()=>openInNewTab(`./printable?t=${encodeURIComponent(compressedTune)}`)}>Printable Page</Button>
       <div>
         <div id="main-midi"></div>
         <div id="paper"></div>
