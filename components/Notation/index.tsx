@@ -28,7 +28,6 @@ function notesStringHandler(data: string) {
                 tempLast = len
                 break
             case "(3":
-                console.log(tempLast)
                 needTriplet = true
                 tripletX1 = len
                 tempTripletChecker = true
@@ -280,7 +279,6 @@ function Triplet(x1: any, x2: any, noteInfo: any){
     }else if (noteInfo.line == "3"){
         y = 100.71
     }
-    console.log(noteInfo)
     return (
         <g data-name="triplet" key={`t-${x1}-${x2}`}>
             <path d={`M ${x1} ${y} L ${x1} ${y+5}M ${x2} ${y} L ${x2} ${y+5}M ${x1} ${y} L ${dX-4} ${y}M ${dX+4} ${y} L ${x2} ${y}`} data-name="triplet-bracket"></path>
@@ -439,7 +437,7 @@ function Note(x: any, noteInfo: any){
     }
     return (
         <g key={`n-${x}`} className="abcjs-tabNumber abcjs-note abcjs-d0-125 abcjs-p4 abcjs-l0 abcjs-m0 abcjs-mm0 abcjs-v0 abcjs-n0" fill="currentColor" stroke="none" data-name="tabNumber" data-index="27">
-            <text stroke="none" fontSize="15" fontStyle="normal" fontFamily="Arial" fontWeight="normal" textDecoration="none" className="abcjs-tab-number" textAnchor="middle" x={x} y={y} cursor="default">
+            <text stroke="none" fontSize="13" fontStyle="normal" fontFamily="Arial" fontWeight="normal" textDecoration="none" className="abcjs-tab-number" textAnchor="middle" x={x} y={y} cursor="default">
               <tspan x={x}>{noteInfo.note}</tspan>
             </text>
             {len}
@@ -468,7 +466,7 @@ function Notes(x: any, notesInfo: any){
             y = 120.71
         }
         rows.push(
-            <text stroke="none" fontSize="15" fontStyle="normal" fontFamily="Arial" fontWeight="normal" textDecoration="none" className="abcjs-tab-number" textAnchor="middle" x={x} y={y} cursor="default">
+            <text stroke="none" fontSize="13" fontStyle="normal" fontFamily="Arial" fontWeight="normal" textDecoration="none" className="abcjs-tab-number" textAnchor="middle" x={x} y={y} cursor="default">
               <tspan x={x}>{notes[i].note}</tspan>
             </text>
         )
@@ -492,11 +490,65 @@ function Notes(x: any, notesInfo: any){
         </g>
     )
 }
+function Header(info: any){
+    const title = info.title || ""
+    const speed = info.speed || ""
+    var key = info.key || ""
+    switch(key.toUpperCase()){
+        case "CFA#":
+            key = "三下り四本(CFA#)"
+            break
+        case "CGC":
+            key = "二上り四本(CGC)"
+            break
+        case "CFC":
+        default:
+            key = "本調子四本(CFC)"
+            break
+    }
+    
+    const timeSignature = info.timeSignature || ""
+    var t1, t2 = ""
+    if(timeSignature.split("/").length == 2){
+        t1 = timeSignature.split("/")[0]
+        t2 = timeSignature.split("/")[1]
+    }
+
+    return (
+        <svg xmlns="http://www.w3.org/1999/xlink" role="img" fill="currentColor" stroke="currentColor" viewBox="0 0 700 90" preserveAspectRatio="xMinYMin meet" >
+            <g key="title">
+                <text stroke="none" fontSize="27" fontStyle="normal" fontFamily="Times New Roman" fontWeight="normal" textDecoration="none" textAnchor="middle" x="350" y="49.56" data-name="title">
+                    <tspan x="350">{title}</tspan>
+                </text>
+            </g>
+            <g key="key">
+                <text stroke="none" fontSize="12" fontStyle="normal" fontFamily="Times New Roman" fontWeight="normal" textDecoration="none" textAnchor="start" x="68.2" y="55.56" data-name="key">
+                    <tspan x="68.2">{key}</tspan>
+                </text>
+            </g>
+            {t1 != "" && t2 != "" && (
+            <g key="key">
+                <text stroke="none" fontSize="12" fontStyle="normal" fontFamily="Times New Roman" fontWeight="normal" textDecoration="none" textAnchor="start" x="68.2" y="70.56" data-name="key">
+                    <tspan x="68.2">{t2}分の{t1}拍子</tspan>
+                </text>
+            </g>)}
+            {(speed != "") && (
+            <g fill="currentColor" stroke="none" data-name="tempo" key="tempo">
+                <text stroke="none" fontSize="12" fontStyle="normal" fontFamily="Times New Roman" fontWeight="normal" textDecoration="none" textAnchor="start" x="68.2" y="85.12" data-name="beats">
+                    <tspan x="68.2">Tempo = {speed}</tspan>
+                </text>
+            </g>)}
+            
+        </svg>
+    )
+
+}
 
 function Notation(props: any) {
     var results = []
     const {input} = props
     const tuneInfo = TuneParser(input)
+    const header = Header(tuneInfo)
     for(var k = 0; k < tuneInfo.notes.length; k++){
         var notesString = tuneInfo.notes[k]
         notesString = notesString.trim()
@@ -532,17 +584,17 @@ function Notation(props: any) {
         }
         const notesInfo = notesStringHandler(notesString)
         var totalLen = notesInfo.len
-        if(totalLen < 30){
-            totalLen = 30
+        if(totalLen < 50){
+            totalLen = 50
 
         }
-        var notePadding = ((697-5)/totalLen)
+        var notePadding = ((697-35)/totalLen)
         var temp = 0
         var preX = 0
         var preTemp = 0
         for(var i = 0; i < notesInfo.notes.length; i ++){
             temp+=notesInfo.notes[i].len || 0
-            var x = ((5+(temp*notePadding))+preTemp) / 2
+            var x = ((35+(temp*notePadding))+preTemp) / 2
             const noteType = notesInfo.notes[i].type
             if(noteType == "notes"){
                 rows.push(Notes(x, notesInfo.notes[i]))
@@ -552,10 +604,9 @@ function Notation(props: any) {
                 continue
             }else if(noteType == "triplet"){
                 x = preX
-                console.log(notesInfo.notes[i])
                 var startPre = notesInfo.notes[i].startPre || 0
                 var start = notesInfo.notes[i].start || 0
-                rows.push(Triplet(((5+(startPre*notePadding))+(5+(start*notePadding))) / 2, x, notesInfo.notes[i]))
+                rows.push(Triplet(((35+(startPre*notePadding))+(35+(start*notePadding))) / 2, x, notesInfo.notes[i]))
                 continue
             }
             const note = notesInfo.notes[i].note
@@ -576,7 +627,7 @@ function Notation(props: any) {
                 rows.push(Note(x, data))
             }
             preX = x
-            preTemp = 5+(temp*notePadding)
+            preTemp = 35+(temp*notePadding)
         }
         results.push(
             <svg key={`line-${k}`} xmlns="http://www.w3.org/2000/svg" className="abcjs-container" role="img" fill="#000" stroke="#000" 
@@ -591,7 +642,7 @@ function Notation(props: any) {
         )
     }
 
-    return (<>{results}</>)
+    return (<>{header}{results}</>)
 }
 
 export {Notation, TuneTranslator}

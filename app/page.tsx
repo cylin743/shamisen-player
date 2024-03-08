@@ -1,5 +1,5 @@
 "use client"
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import 'abcjs/abcjs-audio.css';
 import {Notation, TuneTranslator} from '../components/Notation'
 import { useSearchParams } from 'next/navigation'
@@ -49,11 +49,15 @@ export default function Home() {
   const handleShare = () => {
     navigator.clipboard.writeText(sharedLink)
   }
+  const openInNewTab = (url: string) => {
+    window.open(url, "_blank", "noreferrer");
+  };
+  let compressedTune = LZString.compressToBase64(tune);
   
   
   
   useEffect(() => {
-    let compressedTune = LZString.compressToBase64(tune);
+    compressedTune = LZString.compressToBase64(tune);
     setSharedLink(`https://cylin743.github.io/shamisen-player/?t=${encodeURIComponent(compressedTune)}`)
     const t3 = TuneTranslator(tune)
     const abcObj = abcjs.renderAbc('*', t3, {
@@ -111,6 +115,7 @@ export default function Home() {
         </AccordionDetails>
       </Accordion>
       <Button onClick={handleOpen}>Share</Button>
+      <Button onClick={()=>openInNewTab(`/printable?t=${encodeURIComponent(compressedTune)}`)}>Printable Page</Button>
       <div>
         <div id="main-midi"></div>
         <div id="paper"></div>
