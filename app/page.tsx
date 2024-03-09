@@ -43,6 +43,7 @@ export default function Home() {
   }
   const [tune, setTune] = useState(defaultTune);
   const [open, setOpen] = useState(false);
+  const [synthController, setSynthController] = useState<any>(null);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   const [sharedLink, setSharedLink] = useState("")
@@ -57,6 +58,9 @@ export default function Home() {
   
   
   useEffect(() => {
+    if(synthController != null){
+      synthController.pause()
+    }
     compressedTune = LZString.compressToBase64(tune);
     setSharedLink(`https://cylin743.github.io/shamisen-player/?t=${encodeURIComponent(compressedTune)}`)
     const t3 = TuneTranslator(tune)
@@ -71,7 +75,7 @@ export default function Home() {
     });
     const [visualObj] = abcObj
     var cursorControl = new CursorControl();
-    var synthControl = new abcjs.synth.SynthController();
+    var synthControl = new abcjs.synth.SynthController()
     synthControl.load('#main-midi', cursorControl, {
       displayRestart: true,
       displayPlay: true,
@@ -91,6 +95,7 @@ export default function Home() {
       program: 106,
       chordsOff: true
     });
+    setSynthController(synthControl)
 
   }, [tune])
 
@@ -98,6 +103,9 @@ export default function Home() {
   return (
     <main>
       <h1>Shamisen Player</h1>
+      <Button onClick={handleOpen}>Share</Button>
+      <Button onClick={()=>openInNewTab(`./printable?t=${encodeURIComponent(compressedTune)}`)}>Printable Page</Button>
+      <Button onClick={()=>openInNewTab(`https://hackmd.io/@cklin/rkOaMKdap`)}>Help</Button>
       <Accordion>
         <AccordionSummary
           expandIcon={<ArrowDropDownIcon />}
@@ -114,9 +122,6 @@ export default function Home() {
           ></textarea>
         </AccordionDetails>
       </Accordion>
-      <Button onClick={handleOpen}>Share</Button>
-      <Button onClick={()=>openInNewTab(`./printable?t=${encodeURIComponent(compressedTune)}`)}>Printable Page</Button>
-      <Button onClick={()=>openInNewTab(`https://hackmd.io/@cklin/rkOaMKdap`)}>Help</Button>
       <div>
         <div id="main-midi"></div>
         <div id="paper"></div>
