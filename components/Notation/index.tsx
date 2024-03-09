@@ -19,11 +19,11 @@ function notesStringHandler(data: string) {
             case "||":
             case "|:":
             case ":|":
-                len+=2
+                len+=1
                 results.push({
                     type: "bar",
                     note: matches[i],
-                    len: 2
+                    len: 1
                 })
                 tempLast = len
                 break
@@ -52,16 +52,32 @@ function notesStringHandler(data: string) {
                             note: matches[i],
                             len: parseInt(temp[0])
                         })
+                        break
                     }
                     var check = l.match(/\d+/g) || []
                     if(check.length > 0){
                         var temp: Array<string> = l.match(/\d+/g) || ["0"]
-                        len+=parseInt(temp[0])*2
-                        results.push({
-                            type: "relax",
-                            note: matches[i],
-                            len: parseInt(temp[0])*2
-                        })
+                        if(temp[0] == "4"){
+                            len+=parseInt(temp[0])*2
+                            results.push({
+                                type: "relax",
+                                note: matches[i],
+                                len: 4
+                            })
+                            results.push({
+                                type: "longNote",
+                                len: 4
+                            })
+
+                        }else{
+                            len+=parseInt(temp[0])*2
+                            results.push({
+                                type: "relax",
+                                note: matches[i],
+                                len: parseInt(temp[0])*2
+                            })
+                        }
+                        break
                     }
                     if(l == "/"){
                         var temp: Array<string> = l.match(/\d+/g) || ["0"]
@@ -124,16 +140,33 @@ function notesStringHandler(data: string) {
                             notes: notes,
                             len: parseInt(temp[0])
                         })
+                        break
                     }
                     var check = l.match(/\d+/g) || []
                     if(check.length > 0){
                         var temp: Array<string> = l.match(/\d+/g) || ["0"]
-                        len+=parseInt(temp[0])*2
-                        results.push({
-                            type: "notes",
-                            notes: notes,
-                            len: parseInt(temp[0])*2
-                        })
+                        if(temp[0] == "4"){
+                            len+=parseInt(temp[0])*2
+                            results.push({
+                                type: "notes",
+                                notes: notes,
+                                len: 4
+                            })
+                            results.push({
+                                type: "longNote",
+                                len: 4
+                            })
+
+                        }else{
+                            len+=parseInt(temp[0])*2
+                            results.push({
+                                type: "notes",
+                                notes: notes,
+                                len: parseInt(temp[0])*2
+                            })
+                        }
+                        
+                        break
                     }
                     if(l == "/"){
                         var temp: Array<string> = l.match(/\d+/g) || ["0"]
@@ -208,18 +241,35 @@ function notesStringHandler(data: string) {
                             note: position,
                             len: parseInt(temp[0])
                         })
+                        break
                     }
                     var check = l.match(/\d+/g) || []
                     if(check.length > 0){
                         var temp: Array<string> = l.match(/\d+/g) || ["0"]
-                        len+=parseInt(temp[0])*2
-                        results.push({
-                            type: "note",
-                            tech,
-                            line,
-                            note: position,
-                            len: parseInt(temp[0])*2
-                        })
+                        if(temp[0] == "4"){
+                            len+=parseInt(temp[0])*2
+                            results.push({
+                                type: "note",
+                                tech,
+                                line,
+                                note: position,
+                                len: 4
+                            })
+                            results.push({
+                                type: "longNote",
+                                len: 4
+                            })
+                        }else{
+                            len+=parseInt(temp[0])*2
+                            results.push({
+                                type: "note",
+                                tech,
+                                line,
+                                note: position,
+                                len: parseInt(temp[0])*2
+                            })
+                        }
+                        break
                     }
                     if(l == "/"){
                         var temp: Array<string> = l.match(/\d+/g) || ["0"]
@@ -345,6 +395,13 @@ function Relax(x: any, noteInfo: any){
             <path d={`M ${x-3} ${ySub-8}L ${x-3} ${ySub-8.5}L ${x+3} ${ySub-8.5}L ${x+3} ${ySub-8}z`} data-name="bar"></path>
             </g>
             )
+    }else if(noteInfo.len == 3){
+        len = (<g key={`n-d-${x}`} >
+            <path d={`M ${x-3} ${ySub-8}L ${x-3} ${ySub-8.5}L ${x+3} ${ySub-8.5}L ${x+3} ${ySub-8}z`} data-name="bar"></path>
+            <path data-name="dots.dot" d={`M ${x+6} ${ySub-10.5}c 0.09 -0.03 0.27 -0.06 0.39 -0.06c 0.46 0 1.24 0.28 1.24 1.21c 0 0.46 -0.28 1.24 -1.21 1.24c -0.46 0 -1.24 -0.28 -1.24 -1.21c 0 -0.28 0.04 -1.0 0.82 -1.18z`}></path>
+            </g>
+            )
+
     }
     return (
         <g key={`r-g-${x}`} className="abcjs-tabNumber abcjs-note abcjs-d0-125 abcjs-p4 abcjs-l0 abcjs-m0 abcjs-mm0 abcjs-v0 abcjs-n0" fill="currentColor" stroke="none" data-name="tabNumber" data-index="27">
@@ -354,6 +411,16 @@ function Relax(x: any, noteInfo: any){
     )
 
 }
+
+function LongNote(x: any){
+    var ySub = 134.71
+    return (
+        <g key={`n-${x}`} className="abcjs-tabNumber abcjs-note abcjs-d0-125 abcjs-p4 abcjs-l0 abcjs-m0 abcjs-mm0 abcjs-v0 abcjs-n0" fill="currentColor" stroke="none" data-name="tabNumber" data-index="27">
+            <path d={`M ${x-5} ${ySub-8}L ${x-5} ${ySub-9.5}L ${x+5} ${ySub-9.5}L ${x+5} ${ySub-8}z`} data-name="bar"></path>
+        </g>
+    )
+}
+
 function Note(x: any, noteInfo: any){
     var y = 144.71
     var ySub = 154.71
@@ -374,6 +441,7 @@ function Note(x: any, noteInfo: any){
     if(noteInfo.tech !== ""){
         switch(noteInfo.tech) {
             case "o":
+            case "oshi":
                 tech = (<g key={`n-dt-${x}`} >
                         <path d={`M ${noteInfo.preX} ${yySub-9}L ${noteInfo.preX} ${yySub-15}L ${noteInfo.preX+0.5} ${yySub-16}L ${noteInfo.preX+0.5} ${ySub-9}z`} data-name="bar"></path>
                         <path d={`M ${noteInfo.preX} ${yySub-15}L ${noteInfo.preX} ${yySub-16}L ${x-5} ${yySub-16}L ${x-5} ${yySub-15}z`} data-name="bar"></path>
@@ -382,7 +450,7 @@ function Note(x: any, noteInfo: any){
                 break
             case "s":
             case "sk":
-            case "skui":
+            case "sukui":
                 tech = (<text stroke="none" fontSize="8" fontStyle="normal" fontFamily="Arial" fontWeight="normal" textDecoration="none" className="abcjs-tab-number" textAnchor="middle" x={x} y={ySub} cursor="default">
                             <tspan x={x}>ス</tspan>
                         </text>)
@@ -434,6 +502,13 @@ function Note(x: any, noteInfo: any){
             <path d={`M ${x-3} ${ySub-6}L ${x-3} ${ySub-6.5}L ${x+3} ${ySub-6.5}L ${x+3} ${ySub-6}z`} data-name="bar"></path>
             </g>
             )
+    }else if(noteInfo.len == 3){
+        len = (<g key={`n-d-${x}`} >
+            <path d={`M ${x-3} ${ySub-8}L ${x-3} ${ySub-8.5}L ${x+3} ${ySub-8.5}L ${x+3} ${ySub-8}z`} data-name="bar"></path>
+            <path data-name="dots.dot" d={`M ${x+6} ${ySub-10.5}c 0.09 -0.03 0.27 -0.06 0.39 -0.06c 0.46 0 1.24 0.28 1.24 1.21c 0 0.46 -0.28 1.24 -1.21 1.24c -0.46 0 -1.24 -0.28 -1.24 -1.21c 0 -0.28 0.04 -1.0 0.82 -1.18z`}></path>
+            </g>
+            )
+
     }
     return (
         <g key={`n-${x}`} className="abcjs-tabNumber abcjs-note abcjs-d0-125 abcjs-p4 abcjs-l0 abcjs-m0 abcjs-mm0 abcjs-v0 abcjs-n0" fill="currentColor" stroke="none" data-name="tabNumber" data-index="27">
@@ -482,6 +557,13 @@ function Notes(x: any, notesInfo: any){
             <path d={`M ${x-3} ${ySub-8}L ${x-3} ${ySub-8.5}L ${x+3} ${ySub-8.5}L ${x+3} ${ySub-8}z`} data-name="bar"></path>
             </g>
             )
+    }else if(notesInfo.len == 3){
+        len = (<g key={`n-d-${x}`} >
+            <path d={`M ${x-3} ${ySub-8}L ${x-3} ${ySub-8.5}L ${x+3} ${ySub-8.5}L ${x+3} ${ySub-8}z`} data-name="bar"></path>
+            <path data-name="dots.dot" d={`M ${x+6} ${ySub-10.5}c 0.09 -0.03 0.27 -0.06 0.39 -0.06c 0.46 0 1.24 0.28 1.24 1.21c 0 0.46 -0.28 1.24 -1.21 1.24c -0.46 0 -1.24 -0.28 -1.24 -1.21c 0 -0.28 0.04 -1.0 0.82 -1.18z`}></path>
+            </g>
+            )
+
     }
     return (
         <g key={`ns-${x}`} className="abcjs-tabNumber abcjs-note abcjs-d0-125 abcjs-p4 abcjs-l0 abcjs-m0 abcjs-mm0 abcjs-v0 abcjs-n0" fill="currentColor" stroke="none" data-name="tabNumber" data-index="27">
@@ -583,30 +665,36 @@ function Notation(props: any) {
             rows.push(Bar(699.4))
         }
         const notesInfo = notesStringHandler(notesString)
-        var totalLen = notesInfo.len
-        if(totalLen < 50){
-            totalLen = 50
-
+        var totalLen = notesInfo.len*2
+        if(totalLen < 80){
+            totalLen = 80
         }
-        var notePadding = ((697-35)/totalLen)
+        var startX = 10 
+        var endX = 697
+        var notePadding = ((endX-startX)/totalLen) // 1格長度
+        var preCount = 0
         var temp = 0
         var preX = 0
-        var preTemp = 0
+        
         for(var i = 0; i < notesInfo.notes.length; i ++){
-            temp+=notesInfo.notes[i].len || 0
-            var x = ((35+(temp*notePadding))+preTemp) / 2
+            temp+=((notesInfo.notes[i].len || 0)*2)
+            var x = ((startX*2+((preCount+1)*notePadding))+(preCount*notePadding)) / 2
             const noteType = notesInfo.notes[i].type
             if(noteType == "notes"){
                 rows.push(Notes(x, notesInfo.notes[i]))
+                preX = x
+                preCount = temp
                 continue
             }else if(noteType == "relax"){
                 rows.push(Relax(x, notesInfo.notes[i]))
+                preX = x
+                preCount = temp
                 continue
             }else if(noteType == "triplet"){
                 x = preX
-                var startPre = notesInfo.notes[i].startPre || 0
-                var start = notesInfo.notes[i].start || 0
-                rows.push(Triplet(((35+(startPre*notePadding))+(35+(start*notePadding))) / 2, x, notesInfo.notes[i]))
+                var startPre = (notesInfo.notes[i].startPre || 0)*2
+                var start = (notesInfo.notes[i].start || 0)*2
+                rows.push(Triplet(((startX+(startPre*notePadding))+(startX+((startPre+1)*notePadding))) / 2, x, notesInfo.notes[i]))
                 continue
             }
             const note = notesInfo.notes[i].note
@@ -619,6 +707,8 @@ function Notation(props: any) {
                 rows.push(StartBar(x))
             }else if(note == ":|"){
                 rows.push(EndBar(x))
+            }else if(noteType == "longNote"){
+                rows.push(LongNote(x))
             }else{
                 var data = {
                     ...notesInfo.notes[i],
@@ -627,7 +717,7 @@ function Notation(props: any) {
                 rows.push(Note(x, data))
             }
             preX = x
-            preTemp = 35+(temp*notePadding)
+            preCount = temp
         }
         results.push(
             <svg key={`line-${k}`} xmlns="http://www.w3.org/2000/svg" className="abcjs-container" role="img" fill="#000" stroke="#000" 

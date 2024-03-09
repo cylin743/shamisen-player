@@ -139,7 +139,7 @@ function cgcTransformer(note: string){
             case "1:17":
             case "2:11":
             case "3:7":
-                result += "^G"
+                result += "_A"
                 break
             case "1:18":
             case "2:12":
@@ -311,7 +311,7 @@ function cfaTransformer(note: string){
             case "1:17":
             case "2:13":
             case "3:9":
-                result += "^G"
+                result += "_A"
                 break
             case "1:18":
             case "2:1#":
@@ -473,7 +473,7 @@ function cfcTransformer(note: string){
             case "1:17":
             case "2:13":
             case "3:7":
-                result += "^G"
+                result += "_A"
                 break
             case "1:18":
             case "2:1#":

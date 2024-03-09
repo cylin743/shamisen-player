@@ -116,6 +116,7 @@ export default function Home() {
       </Accordion>
       <Button onClick={handleOpen}>Share</Button>
       <Button onClick={()=>openInNewTab(`./printable?t=${encodeURIComponent(compressedTune)}`)}>Printable Page</Button>
+      <Button onClick={()=>openInNewTab(`https://hackmd.io/@cklin/rkOaMKdap`)}>Help</Button>
       <div>
         <div id="main-midi"></div>
         <div id="paper"></div>
@@ -133,7 +134,7 @@ export default function Home() {
 
 const InputStyle = {
   padding: "12px 10px",
-  width: "90%",
+  width: "98%",
   height: "250px",
 }
 
